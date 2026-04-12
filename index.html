@@ -333,6 +333,7 @@
 
 <h1>Sushi & Nigiri</h1>
 <p class="subtitle">Control de alimentación diaria · 3 tomas</p>
+<button class="reset-btn" onclick="reset()">Reiniciar valores</button>
 
 <!-- SUSHI -->
 <div class="cat-section">
@@ -492,11 +493,15 @@
             <div class="vax-cat">Sushi 🐈‍⬛</div>
             <div class="vax-badge urgent" id="s-vax-badge">Próxima: mayo 2026</div>
         </div>
-        <div class="vax-row"><span class="vax-label">Última vacuna</span><span class="vax-value">13 / 05 / 2025</span></div>
-        <div class="vax-row"><span class="vax-label">Próxima dosis</span><span class="vax-value" id="s-next-date">13 / 05 / 2026</span></div>
+        <div class="vax-row"><span class="vax-label">Próxima dosis</span><span class="vax-value">13 / 05 / 2026</span></div>
         <div class="vax-row"><span class="vax-label">Días restantes</span><span class="vax-value" id="s-days">—</span></div>
         <div class="vax-vaccines">
-            <strong>Vacunas aplicadas</strong>
+            <strong>Historial</strong>
+            📅 27/03/2024 — Purevax + Rabisin<br>
+            📅 13/05/2025 — Felocell 3 + Defensor 1
+        </div>
+        <div class="vax-vaccines" style="margin-top:8px">
+            <strong>Próxima cita — pedir</strong>
             Felocell 3 (rinotraqueítis · calicivirus · panleucopenia) + Defensor 1 (rabia)
         </div>
     </div>
@@ -506,11 +511,15 @@
             <div class="vax-cat">Nigiri 🐆</div>
             <div class="vax-badge urgent" id="n-vax-badge">Próxima: mayo 2026</div>
         </div>
-        <div class="vax-row"><span class="vax-label">Última vacuna</span><span class="vax-value">13 / 05 / 2025</span></div>
-        <div class="vax-row"><span class="vax-label">Próxima dosis</span><span class="vax-value" id="n-next-date">13 / 05 / 2026</span></div>
+        <div class="vax-row"><span class="vax-label">Próxima dosis</span><span class="vax-value">13 / 05 / 2026</span></div>
         <div class="vax-row"><span class="vax-label">Días restantes</span><span class="vax-value" id="n-days">—</span></div>
         <div class="vax-vaccines">
-            <strong>Vacunas aplicadas</strong>
+            <strong>Historial</strong>
+            📅 21/11/2023 — Purevax + Rabisin<br>
+            📅 13/05/2025 — Felocell 3 + Defensor 1
+        </div>
+        <div class="vax-vaccines" style="margin-top:8px">
+            <strong>Próxima cita — pedir</strong>
             Felocell 3 (rinotraqueítis · calicivirus · panleucopenia) + Defensor 1 (rabia)
         </div>
     </div>
@@ -523,8 +532,6 @@
     <div class="legend-item"><div class="legend-dot" style="background:#ff9500"></div> Cerca (±15%)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#ff3b30"></div> Fuera de rango</div>
 </div>
-
-<button class="reset-btn" onclick="reset()">Reiniciar valores</button>
 
 <div class="shop-section">
     <div class="shop-title">Dónde comprar</div>
