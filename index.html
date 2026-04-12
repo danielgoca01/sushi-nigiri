@@ -232,7 +232,7 @@
     <div class="cat-header">
         <div>
             <div class="cat-name">Sushi 🐈‍⬛</div>
-            <div class="cat-breed">Azul Ruso · 3.5 kg · menos activa</div>
+            <div class="cat-breed">Azul Ruso · 3.5 kg</div>
         </div>
         <div class="cat-badge">Meta <input type="number" class="kcal-input" id="s-target" value="210" min="50" max="600" oninput="calc('s')"> kcal</div>
     </div>
@@ -279,11 +279,6 @@
 
     <div class="daily-summary">
         <div class="summary-item">
-            <div class="summary-value" id="s-kcal">210</div>
-            <div class="summary-label">kcal / día</div>
-        </div>
-        <div class="divider"></div>
-        <div class="summary-item">
             <div class="summary-value" id="s-tw">160g</div>
             <div class="summary-label">húmedo total</div>
         </div>
@@ -291,6 +286,11 @@
         <div class="summary-item">
             <div class="summary-value" id="s-td">10g</div>
             <div class="summary-label">seco total</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value" id="s-pct">94% H</div>
+            <div class="summary-label">% húmedo/seco</div>
         </div>
         <div class="divider"></div>
         <div class="summary-item">
@@ -306,7 +306,7 @@
     <div class="cat-header">
         <div>
             <div class="cat-name">Nigiri 🐆</div>
-            <div class="cat-breed">Bengalí · 4.0 kg · más activa</div>
+            <div class="cat-breed">Bengalí · 4.0 kg</div>
         </div>
         <div class="cat-badge">Meta <input type="number" class="kcal-input" id="n-target" value="265" min="50" max="600" oninput="calc('n')"> kcal</div>
     </div>
@@ -353,11 +353,6 @@
 
     <div class="daily-summary">
         <div class="summary-item">
-            <div class="summary-value" id="n-kcal">265</div>
-            <div class="summary-label">kcal / día</div>
-        </div>
-        <div class="divider"></div>
-        <div class="summary-item">
             <div class="summary-value" id="n-tw">180g</div>
             <div class="summary-label">húmedo total</div>
         </div>
@@ -365,6 +360,11 @@
         <div class="summary-item">
             <div class="summary-value" id="n-td">20g</div>
             <div class="summary-label">seco total</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value" id="n-pct">75% H</div>
+            <div class="summary-label">% húmedo/seco</div>
         </div>
         <div class="divider"></div>
         <div class="summary-item">
@@ -390,24 +390,8 @@ const KCAL_WET = 1.1;
 const KCAL_DRY = 3.6;
 
 const CATS = {
-    s: {
-        target: 210,
-        meals: [
-            { wetRef: 55, dryBase: 0 },
-            { wetRef: 55, dryBase: 0 },
-            { wetRef: 50, dryBase: 10 }
-        ],
-        defaults: [55, 55, 50]
-    },
-    n: {
-        target: 265,
-        meals: [
-            { wetRef: 60, dryBase: 0 },
-            { wetRef: 60, dryBase: 0 },
-            { wetRef: 60, dryBase: 20 }
-        ],
-        defaults: [60, 60, 60]
-    }
+    s: { target: 210, defaults: [55, 55, 50] },
+    n: { target: 265, defaults: [60, 60, 60] }
 };
 
 function pctBar(wetG, dryG) {
@@ -425,77 +409,69 @@ function pctBar(wetG, dryG) {
 
 function calc(p) {
     const cat = CATS[p];
-    let totalWet = 0, totalDry = 0, totalKcal = 0;
+    const target = Math.max(1, parseFloat(document.getElementById(`${p}-target`).value) || cat.target);
 
+    // Collect wet amounts
+    let totalWet = 0;
+    const wets = [];
     for (let i = 1; i <= 3; i++) {
-        const meal = cat.meals[i - 1];
-        const wetGiven = Math.max(0, parseFloat(document.getElementById(`${p}-w${i}`).value) || 0);
-        const kcalDiff = (meal.wetRef - wetGiven) * KCAL_WET;
-        let dryNeeded = Math.max(0, meal.dryBase + kcalDiff / KCAL_DRY);
-        dryNeeded = Math.round(dryNeeded * 10) / 10;
-
-        const mealKcal = wetGiven * KCAL_WET + dryNeeded * KCAL_DRY;
-
-        document.getElementById(`${p}-d${i}`).textContent = dryNeeded + 'g';
-        document.getElementById(`${p}-p${i}`).innerHTML = pctBar(wetGiven, dryNeeded);
-
-        totalWet += wetGiven;
-        totalDry += dryNeeded;
-        totalKcal += mealKcal;
+        const w = Math.max(0, parseFloat(document.getElementById(`${p}-w${i}`).value) || 0);
+        wets.push(w);
+        totalWet += w;
     }
 
-    totalKcal = Math.round(totalKcal);
-    totalDry = Math.round(totalDry * 10) / 10;
+    // Dry goes entirely in meal 3 (noche), adjusted to hit target
+    const totalWetKcal = totalWet * KCAL_WET;
+    const remaining = target - totalWetKcal;
+    const totalDry = Math.max(0, Math.round(remaining / KCAL_DRY * 10) / 10);
+    const totalKcal = Math.round(totalWetKcal + totalDry * KCAL_DRY);
 
-    document.getElementById(`${p}-kcal`).textContent = totalKcal;
+    // Update meal rows
+    for (let i = 1; i <= 3; i++) {
+        const dry = i === 3 ? totalDry : 0;
+        document.getElementById(`${p}-d${i}`).textContent = dry + 'g';
+        document.getElementById(`${p}-p${i}`).innerHTML = pctBar(wets[i - 1], dry);
+    }
+
+    // Total % húmedo/seco
+    const totalDryKcal = totalDry * KCAL_DRY;
+    const grandTotal = totalWetKcal + totalDryKcal;
+    const pctWet = grandTotal > 0 ? Math.round(totalWetKcal / grandTotal * 100) : 0;
+    const pctDry = 100 - pctWet;
+
     document.getElementById(`${p}-tw`).textContent = totalWet + 'g';
     document.getElementById(`${p}-td`).textContent = totalDry + 'g';
+    document.getElementById(`${p}-pct`).textContent = `${pctWet}% H · ${pctDry}% S`;
 
-    const target = parseFloat(document.getElementById(`${p}-target`).value) || cat.target;
-    const diff = Math.abs(totalKcal - target) / target * 100;
+    // Status
     const stEl = document.getElementById(`${p}-st`);
     const noteEl = document.getElementById(`${p}-note`);
 
-    if (diff <= 5) {
+    if (totalWetKcal > target) {
+        stEl.textContent = '! Exceso';
+        stEl.className = 'summary-value status-bad';
+        noteEl.style.display = 'block';
+        noteEl.textContent = `⚠️ El húmedo solo ya supera la meta en ${Math.round(totalWetKcal - target)} kcal. Reduce las porciones de húmedo o sube la meta.`;
+    } else {
         stEl.textContent = '✓ OK';
         stEl.className = 'summary-value status-ok';
         noteEl.style.display = 'none';
-    } else if (diff <= 15) {
-        stEl.textContent = '~ Cerca';
-        stEl.className = 'summary-value status-warn';
-        const over = totalKcal > target;
-        noteEl.style.display = 'block';
-        noteEl.textContent = over
-            ? `${Math.round(totalKcal - target)} kcal por encima de la meta. Considera reducir un poco el seco en la noche.`
-            : `${Math.round(target - totalKcal)} kcal por debajo de la meta. Puedes añadir un poco más de húmedo en cualquier toma.`;
-    } else {
-        stEl.textContent = '! Fuera';
-        stEl.className = 'summary-value status-bad';
-        const over = totalKcal > target;
-        noteEl.style.display = 'block';
-        noteEl.textContent = over
-            ? `⚠️ ${Math.round(totalKcal - target)} kcal por encima de la meta diaria. Revisa las porciones — el exceso sostenido puede causar sobrepeso.`
-            : `⚠️ ${Math.round(target - totalKcal)} kcal por debajo de la meta diaria. Riesgo de déficit nutricional — aumenta el húmedo en la siguiente toma.`;
     }
 }
-
-const DEFAULT_TARGETS = { s: 210, n: 265 };
 
 function reset() {
     ['s', 'n'].forEach(p => {
         CATS[p].defaults.forEach((v, i) => {
             document.getElementById(`${p}-w${i + 1}`).value = v;
         });
-        document.getElementById(`${p}-target`).value = DEFAULT_TARGETS[p];
+        document.getElementById(`${p}-target`).value = CATS[p].target;
         calc(p);
     });
 }
 
-// Init — múltiples eventos para máxima compatibilidad con WhatsApp y WebViews
-calc('s');
-calc('n');
-document.addEventListener('DOMContentLoaded', () => { calc('s'); calc('n'); });
 window.onload = () => { calc('s'); calc('n'); };
+document.addEventListener('DOMContentLoaded', () => { calc('s'); calc('n'); });
+calc('s'); calc('n');
 </script>
 </body>
 </html>
