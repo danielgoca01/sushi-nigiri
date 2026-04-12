@@ -220,6 +220,59 @@
             transition: background 0.15s;
         }
         .reset-btn:hover { background: #e5e5ea; }
+        .shop-section { margin-top: 32px; }
+        .shop-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #1d1d1f;
+        }
+        .shop-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .shop-product { font-size: 15px; font-weight: 700; }
+        .shop-role {
+            font-size: 11px;
+            font-weight: 600;
+            background: #f2f2f7;
+            color: #8e8e93;
+            padding: 3px 9px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .shop-links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .shop-link {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #007aff;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .shop-link:hover { background: #0066d6; }
+        .shop-alt {
+            background: #fff9ec;
+            border-left: 3px solid #ff9500;
+            border-radius: 0 8px 8px 0;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #5c4400;
+            line-height: 1.5;
+        }
+        .shop-alt strong { display: block; margin-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -385,6 +438,70 @@
 
 <button class="reset-btn" onclick="reset()">Reiniciar valores</button>
 
+<div class="shop-section">
+    <div class="shop-title">Dónde comprar</div>
+
+    <!-- TIKI CAT -->
+    <div class="shop-card">
+        <div class="shop-header">
+            <div>
+                <div class="shop-product">Tiki Cat After Dark</div>
+                <div style="font-size:12px;color:#8e8e93;margin-top:2px">Lata 80g · Comida húmeda principal</div>
+            </div>
+            <div class="shop-role">~$10.000–$10.990</div>
+        </div>
+        <div class="shop-links">
+            <a class="shop-link" href="https://www.tierragro.com/products/tiki-cat-afterdark-pollocarne-lata-80-g" target="_blank">Tierragro $10.000</a>
+            <a class="shop-link" href="https://www.catlikestore.com/alimento-tiki-cat-after-dark-pollo-y-carne-en-caldo-80gr-lata" target="_blank">Catlike $10.990</a>
+            <a class="shop-link" href="https://tienda.catfood.com.co/comida-humeda/tiki-cat/" target="_blank">Catfood Colombia</a>
+        </div>
+        <div class="shop-alt">
+            <strong>Si no hay disponible:</strong>
+            Fancy Feast Classic en caldo (sin salsas ni rellenos) · Almo Nature (grain-free, alta proteína) · Purina Pro Plan Wet Sensitive
+        </div>
+    </div>
+
+    <!-- ROYAL CANIN -->
+    <div class="shop-card">
+        <div class="shop-header">
+            <div>
+                <div class="shop-product">Royal Canin Sensible 33</div>
+                <div style="font-size:12px;color:#8e8e93;margin-top:2px">Concentrado seco · Complemento nocturno</div>
+            </div>
+            <div class="shop-role">Bolsa 2 kg</div>
+        </div>
+        <div class="shop-links">
+            <a class="shop-link" href="https://www.tujilguero.com/products/royal-canin-sensible-33-alimento-especializado-para-gatos-sensibles" target="_blank">Tujilguero</a>
+            <a class="shop-link" href="https://www.mascotasavila.com/products/royal-canin-sensible-33" target="_blank">Mascotas Ávila</a>
+            <a class="shop-link" href="https://laika.com.co" target="_blank">Laika</a>
+        </div>
+        <div class="shop-alt">
+            <strong>Si no hay disponible:</strong>
+            Hill's Science Diet Sensitive Stomach &amp; Skin · Purina Pro Plan Sensitive Skin &amp; Stomach · Farmina N&amp;D Quinoa Digestive
+        </div>
+    </div>
+
+    <!-- FRESH STEP -->
+    <div class="shop-card">
+        <div class="shop-header">
+            <div>
+                <div class="shop-product">Fresh Step Multi Cat</div>
+                <div style="font-size:12px;color:#8e8e93;margin-top:2px">Arena aglomerante · Caja 25 lb (11.3 kg)</div>
+            </div>
+            <div class="shop-role">~$113.750</div>
+        </div>
+        <div class="shop-links">
+            <a class="shop-link" href="https://laika.com.co/product_details/otr/fresh-step-multi-cat-con-frebreze/cat" target="_blank">Laika $114.600</a>
+            <a class="shop-link" href="https://www.puppis.com.co/arena-para-gato-fresh-step-multi-cat-con-febreze/p" target="_blank">Puppis $112.900</a>
+            <a class="shop-link" href="https://www.agrocampo.com.co/arena-fresh-step-multi-cat-con-febreze-25-lb" target="_blank">Agrocampo</a>
+        </div>
+        <div class="shop-alt">
+            <strong>Si no hay disponible:</strong>
+            Arm &amp; Hammer Clump &amp; Seal (excelente control de olor) · Dr. Elsey's Ultra (bajo polvo, ideal FCoV) · World's Best Cat Litter (natural, biodegradable)
+        </div>
+    </div>
+</div>
+
 <script>
 const KCAL_WET = 1.1;
 const KCAL_DRY = 3.6;
@@ -400,70 +517,74 @@ function pctBar(wetG, dryG) {
     const total = wk + dk;
     if (total === 0) return '<div class="pct-wrap"><span class="pct-label">—</span></div>';
     const pw = Math.round(wk / total * 100);
-    const pd = 100 - pw;
     return `<div class="pct-wrap">
-        <div class="pct-bar"><div class="pct-wet" style="width:${pw}%"></div><div class="pct-dry" style="width:${pd}%"></div></div>
-        <div class="pct-label">${pw}% H · ${pd}% S</div>
+        <div class="pct-bar"><div class="pct-wet" style="width:${pw}%"></div><div class="pct-dry" style="width:${100-pw}%"></div></div>
+        <div class="pct-label">${pw}% H · ${100-pw}% S</div>
     </div>`;
 }
 
 function calc(p) {
     const cat = CATS[p];
     const target = Math.max(1, parseFloat(document.getElementById(`${p}-target`).value) || cat.target);
+    const refs = cat.defaults;
 
-    // Collect wet amounts
-    let totalWet = 0;
-    const wets = [];
+    // Night base dry = kcal remaining after reference wet amounts
+    const refWetKcal = refs.reduce((a, b) => a + b, 0) * KCAL_WET;
+    const nightBaseDry = Math.max(0, (target - refWetKcal) / KCAL_DRY);
+    const dryBases = [0, 0, nightBaseDry];
+
+    let totalWet = 0, totalDry = 0, totalWetKcal = 0, totalDryKcal = 0;
+
     for (let i = 1; i <= 3; i++) {
-        const w = Math.max(0, parseFloat(document.getElementById(`${p}-w${i}`).value) || 0);
-        wets.push(w);
-        totalWet += w;
-    }
+        const wet = Math.max(0, parseFloat(document.getElementById(`${p}-w${i}`).value) || 0);
+        const kcalDiff = (refs[i-1] - wet) * KCAL_WET;
+        const dry = Math.max(0, Math.round((dryBases[i-1] + kcalDiff / KCAL_DRY) * 10) / 10);
 
-    // Dry goes entirely in meal 3 (noche), adjusted to hit target
-    const totalWetKcal = totalWet * KCAL_WET;
-    const remaining = target - totalWetKcal;
-    const totalDry = Math.max(0, Math.round(remaining / KCAL_DRY * 10) / 10);
-    const totalKcal = Math.round(totalWetKcal + totalDry * KCAL_DRY);
-
-    // Update meal rows
-    for (let i = 1; i <= 3; i++) {
-        const dry = i === 3 ? totalDry : 0;
         document.getElementById(`${p}-d${i}`).textContent = dry + 'g';
-        document.getElementById(`${p}-p${i}`).innerHTML = pctBar(wets[i - 1], dry);
+        document.getElementById(`${p}-p${i}`).innerHTML = pctBar(wet, dry);
+
+        totalWet += wet;
+        totalDry += dry;
+        totalWetKcal += wet * KCAL_WET;
+        totalDryKcal += dry * KCAL_DRY;
     }
 
-    // Total % húmedo/seco
-    const totalDryKcal = totalDry * KCAL_DRY;
+    const totalKcal = Math.round(totalWetKcal + totalDryKcal);
+    totalDry = Math.round(totalDry * 10) / 10;
     const grandTotal = totalWetKcal + totalDryKcal;
     const pctWet = grandTotal > 0 ? Math.round(totalWetKcal / grandTotal * 100) : 0;
-    const pctDry = 100 - pctWet;
 
     document.getElementById(`${p}-tw`).textContent = totalWet + 'g';
     document.getElementById(`${p}-td`).textContent = totalDry + 'g';
-    document.getElementById(`${p}-pct`).textContent = `${pctWet}% H · ${pctDry}% S`;
+    document.getElementById(`${p}-pct`).textContent = `${pctWet}% H · ${100-pctWet}% S`;
 
-    // Status
     const stEl = document.getElementById(`${p}-st`);
     const noteEl = document.getElementById(`${p}-note`);
+    const diff = Math.abs(totalKcal - target) / target * 100;
 
-    if (totalWetKcal > target) {
-        stEl.textContent = '! Exceso';
-        stEl.className = 'summary-value status-bad';
-        noteEl.style.display = 'block';
-        noteEl.textContent = `⚠️ El húmedo solo ya supera la meta en ${Math.round(totalWetKcal - target)} kcal. Reduce las porciones de húmedo o sube la meta.`;
-    } else {
-        stEl.textContent = '✓ OK';
-        stEl.className = 'summary-value status-ok';
+    if (diff <= 5) {
+        stEl.textContent = '✓ OK'; stEl.className = 'summary-value status-ok';
         noteEl.style.display = 'none';
+    } else if (diff <= 15) {
+        const over = totalKcal > target;
+        stEl.textContent = '~ Cerca'; stEl.className = 'summary-value status-warn';
+        noteEl.style.display = 'block';
+        noteEl.textContent = over
+            ? `${Math.round(totalKcal - target)} kcal por encima de la meta.`
+            : `${Math.round(target - totalKcal)} kcal por debajo de la meta.`;
+    } else {
+        const over = totalKcal > target;
+        stEl.textContent = '! Fuera'; stEl.className = 'summary-value status-bad';
+        noteEl.style.display = 'block';
+        noteEl.textContent = over
+            ? `⚠️ ${Math.round(totalKcal - target)} kcal por encima. Reduce el húmedo.`
+            : `⚠️ ${Math.round(target - totalKcal)} kcal por debajo. Aumenta el húmedo o la meta.`;
     }
 }
 
 function reset() {
     ['s', 'n'].forEach(p => {
-        CATS[p].defaults.forEach((v, i) => {
-            document.getElementById(`${p}-w${i + 1}`).value = v;
-        });
+        CATS[p].defaults.forEach((v, i) => { document.getElementById(`${p}-w${i+1}`).value = v; });
         document.getElementById(`${p}-target`).value = CATS[p].target;
         calc(p);
     });
