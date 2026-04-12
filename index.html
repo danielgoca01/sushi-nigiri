@@ -273,6 +273,60 @@
             line-height: 1.5;
         }
         .shop-alt strong { display: block; margin-bottom: 2px; }
+        .vax-section { margin-top: 32px; }
+        .vax-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .vax-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .vax-cat { font-size: 16px; font-weight: 700; }
+        .vax-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .vax-badge.urgent { background: #fff0f0; color: #ff3b30; }
+        .vax-badge.ok { background: #f0fff4; color: #34c759; }
+        .vax-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-top: 1px solid #f2f2f7;
+            font-size: 13px;
+        }
+        .vax-label { color: #8e8e93; }
+        .vax-value { font-weight: 600; }
+        .vax-vaccines {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: #f2f2f7;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #3c3c43;
+            line-height: 1.6;
+        }
+        .vax-vaccines strong { display: block; margin-bottom: 4px; font-size: 11px; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.4px; }
+        .countdown-alert {
+            background: #fff5f5;
+            border: 1.5px solid #ff3b30;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            color: #cc0000;
+            font-weight: 600;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -428,6 +482,40 @@
     <div class="note" id="n-note" style="display:none"></div>
 </div>
 
+<!-- VACUNAS -->
+<div class="vax-section">
+    <div class="shop-title">Vacunas</div>
+    <div class="countdown-alert" id="vax-alert">⚠️ Cargando recordatorio...</div>
+
+    <div class="vax-card">
+        <div class="vax-header">
+            <div class="vax-cat">Sushi 🐈‍⬛</div>
+            <div class="vax-badge urgent" id="s-vax-badge">Próxima: mayo 2026</div>
+        </div>
+        <div class="vax-row"><span class="vax-label">Última vacuna</span><span class="vax-value">13 / 05 / 2025</span></div>
+        <div class="vax-row"><span class="vax-label">Próxima dosis</span><span class="vax-value" id="s-next-date">13 / 05 / 2026</span></div>
+        <div class="vax-row"><span class="vax-label">Días restantes</span><span class="vax-value" id="s-days">—</span></div>
+        <div class="vax-vaccines">
+            <strong>Vacunas aplicadas</strong>
+            Felocell 3 (rinotraqueítis · calicivirus · panleucopenia) + Defensor 1 (rabia)
+        </div>
+    </div>
+
+    <div class="vax-card">
+        <div class="vax-header">
+            <div class="vax-cat">Nigiri 🐆</div>
+            <div class="vax-badge urgent" id="n-vax-badge">Próxima: mayo 2026</div>
+        </div>
+        <div class="vax-row"><span class="vax-label">Última vacuna</span><span class="vax-value">13 / 05 / 2025</span></div>
+        <div class="vax-row"><span class="vax-label">Próxima dosis</span><span class="vax-value" id="n-next-date">13 / 05 / 2026</span></div>
+        <div class="vax-row"><span class="vax-label">Días restantes</span><span class="vax-value" id="n-days">—</span></div>
+        <div class="vax-vaccines">
+            <strong>Vacunas aplicadas</strong>
+            Felocell 3 (rinotraqueítis · calicivirus · panleucopenia) + Defensor 1 (rabia)
+        </div>
+    </div>
+</div>
+
 <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#34c759"></div> Húmedo</div>
     <div class="legend-item"><div class="legend-dot" style="background:#ff9500"></div> Seco</div>
@@ -456,8 +544,8 @@
             <a class="shop-link" href="https://tienda.catfood.com.co/comida-humeda/tiki-cat/" target="_blank">Catfood Colombia</a>
         </div>
         <div class="shop-alt">
-            <strong>Si no hay disponible:</strong>
-            Fancy Feast Classic en caldo (sin salsas ni rellenos) · Almo Nature (grain-free, alta proteína) · Purina Pro Plan Wet Sensitive
+            <strong>Si no hay disponible (verificado en Colombia):</strong>
+            Fancy Feast Classic en caldo — Puppis, purina.com.co, MercadoLibre CO · Purina Pro Plan Wet Adult — Agrocampo, ceba.com.co, MercadoLibre CO
         </div>
     </div>
 
@@ -476,8 +564,8 @@
             <a class="shop-link" href="https://laika.com.co" target="_blank">Laika</a>
         </div>
         <div class="shop-alt">
-            <strong>Si no hay disponible:</strong>
-            Hill's Science Diet Sensitive Stomach &amp; Skin · Purina Pro Plan Sensitive Skin &amp; Stomach · Farmina N&amp;D Quinoa Digestive
+            <strong>Si no hay disponible (verificado en Colombia):</strong>
+            Hill's Science Diet Sensitive Stomach &amp; Skin — Agrocampo, Laika · Farmina N&amp;D — ceba.com.co, patitasco.com, MercadoLibre CO
         </div>
     </div>
 
@@ -496,8 +584,8 @@
             <a class="shop-link" href="https://www.agrocampo.com.co/arena-fresh-step-multi-cat-con-febreze-25-lb" target="_blank">Agrocampo</a>
         </div>
         <div class="shop-alt">
-            <strong>Si no hay disponible:</strong>
-            Arm &amp; Hammer Clump &amp; Seal (excelente control de olor) · Dr. Elsey's Ultra (bajo polvo, ideal FCoV) · World's Best Cat Litter (natural, biodegradable)
+            <strong>Si no hay disponible (verificado en Colombia):</strong>
+            OdourLock MaxCare 12kg — Agrocampo (ultra-premium, bajo polvo, excelente para FCoV) · Canada Litter — MercadoLibre CO · Fresh Step Extreme 7lb — Agrocampo (presentación más pequeña)
         </div>
     </div>
 </div>
@@ -590,9 +678,54 @@ function reset() {
     });
 }
 
-window.onload = () => { calc('s'); calc('n'); };
-document.addEventListener('DOMContentLoaded', () => { calc('s'); calc('n'); });
-calc('s'); calc('n');
+function calcVax() {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const due = new Date(2026, 4, 13); // 13 mayo 2026
+    const diff = Math.round((due - today) / (1000 * 60 * 60 * 24));
+
+    ['s','n'].forEach(p => {
+        const daysEl = document.getElementById(`${p}-days`);
+        const badgeEl = document.getElementById(`${p}-vax-badge`);
+        if (diff < 0) {
+            daysEl.textContent = `Vencida hace ${Math.abs(diff)} días`;
+            daysEl.style.color = '#ff3b30';
+            badgeEl.textContent = '⚠️ Vencida';
+            badgeEl.className = 'vax-badge urgent';
+        } else if (diff === 0) {
+            daysEl.textContent = '¡Hoy!';
+            daysEl.style.color = '#ff3b30';
+            badgeEl.textContent = '🔴 ¡Hoy!';
+            badgeEl.className = 'vax-badge urgent';
+        } else if (diff <= 30) {
+            daysEl.textContent = `${diff} días`;
+            daysEl.style.color = '#ff9500';
+            badgeEl.textContent = `⏰ En ${diff} días`;
+            badgeEl.className = 'vax-badge urgent';
+        } else {
+            daysEl.textContent = `${diff} días`;
+            daysEl.style.color = '#34c759';
+            badgeEl.textContent = `✓ En ${diff} días`;
+            badgeEl.className = 'vax-badge ok';
+        }
+    });
+
+    const alertEl = document.getElementById('vax-alert');
+    if (diff < 0) {
+        alertEl.textContent = `⚠️ ¡Vacunas vencidas hace ${Math.abs(diff)} días! Agenda la cita hoy.`;
+    } else if (diff <= 30) {
+        alertEl.textContent = `⏰ Faltan ${diff} días para la próxima vacuna — agenda la cita esta semana.`;
+    } else {
+        alertEl.style.background = '#f0fff4';
+        alertEl.style.borderColor = '#34c759';
+        alertEl.style.color = '#1a7a3a';
+        alertEl.textContent = `✓ Vacunas al día — próxima dosis en ${diff} días.`;
+    }
+}
+
+window.onload = () => { calc('s'); calc('n'); calcVax(); };
+document.addEventListener('DOMContentLoaded', () => { calc('s'); calc('n'); calcVax(); });
+calc('s'); calc('n'); calcVax();
 </script>
 </body>
 </html>
