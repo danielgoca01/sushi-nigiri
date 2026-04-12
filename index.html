@@ -394,7 +394,7 @@
         <div class="divider"></div>
         <div class="summary-item">
             <div class="summary-value" id="s-pct">94% H</div>
-            <div class="summary-label">% húmedo/seco</div>
+            <div class="summary-label">húmedo/seco</div>
         </div>
         <div class="divider"></div>
         <div class="summary-item">
@@ -465,7 +465,7 @@
         <div class="divider"></div>
         <div class="summary-item">
             <div class="summary-value" id="n-pct">75% H</div>
-            <div class="summary-label">% húmedo/seco</div>
+            <div class="summary-label">húmedo/seco</div>
         </div>
         <div class="divider"></div>
         <div class="summary-item">
@@ -613,7 +613,7 @@ function pctBar(wetG, dryG) {
     const pw = Math.round(wk / total * 100);
     return `<div class="pct-wrap">
         <div class="pct-bar"><div class="pct-wet" style="width:${pw}%"></div><div class="pct-dry" style="width:${100-pw}%"></div></div>
-        <div class="pct-label">${pw}% H · ${100-pw}% S</div>
+        <div class="pct-label">${pw}% · ${100-pw}%</div>
     </div>`;
 }
 
@@ -650,7 +650,7 @@ function calc(p) {
 
     document.getElementById(`${p}-tw`).textContent = totalWet + 'g';
     document.getElementById(`${p}-td`).textContent = totalDry + 'g';
-    document.getElementById(`${p}-pct`).textContent = `${pctWet}% H · ${100-pctWet}% S`;
+    document.getElementById(`${p}-pct`).textContent = `${pctWet}% · ${100-pctWet}%`;
 
     const stEl = document.getElementById(`${p}-st`);
     const noteEl = document.getElementById(`${p}-note`);
