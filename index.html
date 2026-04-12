@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushi & Nigiri — Control de Alimentación</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 20px 16px 40px;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #8e8e93;
+            margin-bottom: 24px;
+        }
+        .cat-section {
+            background: white;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        }
+        .cat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+        .cat-name {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .cat-breed {
+            font-size: 12px;
+            color: #8e8e93;
+            margin-top: 2px;
+        }
+        .cat-badge {
+            background: #f2f2f7;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #3c3c43;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .kcal-input {
+            width: 54px;
+            padding: 2px 4px;
+            border: 1.5px solid #d1d1d6;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            background: white;
+            color: #1d1d1f;
+            -moz-appearance: textfield;
+        }
+        .kcal-input::-webkit-outer-spin-button,
+        .kcal-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+        .kcal-input:focus {
+            border-color: #007aff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            font-size: 11px;
+            font-weight: 600;
+            color: #8e8e93;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 0 6px 10px;
+            text-align: center;
+        }
+        th:first-child { text-align: left; }
+        td {
+            padding: 10px 6px;
+            text-align: center;
+            border-top: 1px solid #f2f2f7;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        td:first-child { text-align: left; }
+        .meal-label {
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .meal-sub {
+            font-size: 11px;
+            color: #8e8e93;
+            font-weight: 400;
+        }
+        input[type="number"] {
+            width: 68px;
+            padding: 7px 6px;
+            border: 1.5px solid #e5e5ea;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+        input[type="number"]:focus {
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0,122,255,0.12);
+        }
+        .dry-cell {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .pct-wrap { text-align: center; }
+        .pct-bar {
+            display: flex;
+            height: 7px;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 72px;
+            margin: 0 auto 4px;
+            background: #f2f2f7;
+        }
+        .pct-wet { background: #34c759; transition: width 0.3s; }
+        .pct-dry { background: #ff9500; transition: width 0.3s; }
+        .pct-label {
+            font-size: 11px;
+            color: #8e8e93;
+        }
+        .daily-summary {
+            margin-top: 18px;
+            padding: 14px 10px;
+            background: #f2f2f7;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .summary-item { text-align: center; }
+        .summary-value {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .summary-label {
+            font-size: 11px;
+            color: #8e8e93;
+            margin-top: 3px;
+        }
+        .divider {
+            width: 1px;
+            height: 36px;
+            background: #d1d1d6;
+        }
+        .status-ok { color: #34c759; }
+        .status-warn { color: #ff9500; }
+        .status-bad { color: #ff3b30; }
+        .note {
+            background: #fff9ec;
+            border-left: 3px solid #ff9500;
+            border-radius: 0 10px 10px 0;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #5c4400;
+            margin-top: 14px;
+            line-height: 1.5;
+        }
+        .legend {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #8e8e93;
+        }
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .reset-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 28px;
+            background: #f2f2f7;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #3c3c43;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .reset-btn:hover { background: #e5e5ea; }
+    </style>
+</head>
+<body>
+
+<h1>Sushi & Nigiri</h1>
+<p class="subtitle">Control de alimentación diaria · 3 tomas</p>
+
+<!-- SUSHI -->
+<div class="cat-section">
+    <div class="cat-header">
+        <div>
+            <div class="cat-name">Sushi 🐈‍⬛</div>
+            <div class="cat-breed">Azul Ruso · 3.5 kg · menos activa</div>
+        </div>
+        <div class="cat-badge">Meta <input type="number" class="kcal-input" id="s-target" value="210" min="50" max="600" oninput="calc('s')"> kcal</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Toma</th>
+                <th>Húmedo (g)</th>
+                <th>Seco (g)</th>
+                <th>% H / S</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="meal-label">☀️ Mañana</div>
+                    <div class="meal-sub">ref. 55g</div>
+                </td>
+                <td><input type="number" id="s-w1" value="55" min="0" max="250" oninput="calc('s')"></td>
+                <td class="dry-cell" id="s-d1">0g</td>
+                <td id="s-p1"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:100%"></div><div class="pct-dry" style="width:0%"></div></div><div class="pct-label">100% H · 0% S</div></div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="meal-label">🌤 Mediodía</div>
+                    <div class="meal-sub">ref. 55g</div>
+                </td>
+                <td><input type="number" id="s-w2" value="55" min="0" max="250" oninput="calc('s')"></td>
+                <td class="dry-cell" id="s-d2">0g</td>
+                <td id="s-p2"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:100%"></div><div class="pct-dry" style="width:0%"></div></div><div class="pct-label">100% H · 0% S</div></div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="meal-label">🌙 Noche</div>
+                    <div class="meal-sub">ref. 50g + 10g seco</div>
+                </td>
+                <td><input type="number" id="s-w3" value="50" min="0" max="250" oninput="calc('s')"></td>
+                <td class="dry-cell" id="s-d3">10g</td>
+                <td id="s-p3"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:61%"></div><div class="pct-dry" style="width:39%"></div></div><div class="pct-label">61% H · 39% S</div></div></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="daily-summary">
+        <div class="summary-item">
+            <div class="summary-value" id="s-kcal">210</div>
+            <div class="summary-label">kcal / día</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value" id="s-tw">160g</div>
+            <div class="summary-label">húmedo total</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value" id="s-td">10g</div>
+            <div class="summary-label">seco total</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value status-ok" id="s-st">✓ OK</div>
+            <div class="summary-label">estado</div>
+        </div>
+    </div>
+    <div class="note" id="s-note" style="display:none"></div>
+</div>
+
+<!-- NIGIRI -->
+<div class="cat-section">
+    <div class="cat-header">
+        <div>
+            <div class="cat-name">Nigiri 🐆</div>
+            <div class="cat-breed">Bengalí · 4.0 kg · más activa</div>
+        </div>
+        <div class="cat-badge">Meta <input type="number" class="kcal-input" id="n-target" value="265" min="50" max="600" oninput="calc('n')"> kcal</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Toma</th>
+                <th>Húmedo (g)</th>
+                <th>Seco (g)</th>
+                <th>% H / S</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="meal-label">☀️ Mañana</div>
+                    <div class="meal-sub">ref. 60g</div>
+                </td>
+                <td><input type="number" id="n-w1" value="60" min="0" max="250" oninput="calc('n')"></td>
+                <td class="dry-cell" id="n-d1">0g</td>
+                <td id="n-p1"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:100%"></div><div class="pct-dry" style="width:0%"></div></div><div class="pct-label">100% H · 0% S</div></div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="meal-label">🌤 Mediodía</div>
+                    <div class="meal-sub">ref. 60g</div>
+                </td>
+                <td><input type="number" id="n-w2" value="60" min="0" max="250" oninput="calc('n')"></td>
+                <td class="dry-cell" id="n-d2">0g</td>
+                <td id="n-p2"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:100%"></div><div class="pct-dry" style="width:0%"></div></div><div class="pct-label">100% H · 0% S</div></div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="meal-label">🌙 Noche</div>
+                    <div class="meal-sub">ref. 60g + 20g seco</div>
+                </td>
+                <td><input type="number" id="n-w3" value="60" min="0" max="250" oninput="calc('n')"></td>
+                <td class="dry-cell" id="n-d3">20g</td>
+                <td id="n-p3"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:55%"></div><div class="pct-dry" style="width:45%"></div></div><div class="pct-label">55% H · 45% S</div></div></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="daily-summary">
+        <div class="summary-item">
+            <div class="summary-value" id="n-kcal">265</div>
+            <div class="summary-label">kcal / día</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value" id="n-tw">180g</div>
+            <div class="summary-label">húmedo total</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value" id="n-td">20g</div>
+            <div class="summary-label">seco total</div>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item">
+            <div class="summary-value status-ok" id="n-st">✓ OK</div>
+            <div class="summary-label">estado</div>
+        </div>
+    </div>
+    <div class="note" id="n-note" style="display:none"></div>
+</div>
+
+<div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#34c759"></div> Húmedo</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff9500"></div> Seco</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#34c759"></div> En meta (±5%)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff9500"></div> Cerca (±15%)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff3b30"></div> Fuera de rango</div>
+</div>
+
+<button class="reset-btn" onclick="reset()">Reiniciar valores</button>
+
+<script>
+const KCAL_WET = 1.1;
+const KCAL_DRY = 3.6;
+
+const CATS = {
+    s: {
+        target: 210,
+        meals: [
+            { wetRef: 55, dryBase: 0 },
+            { wetRef: 55, dryBase: 0 },
+            { wetRef: 50, dryBase: 10 }
+        ],
+        defaults: [55, 55, 50]
+    },
+    n: {
+        target: 265,
+        meals: [
+            { wetRef: 60, dryBase: 0 },
+            { wetRef: 60, dryBase: 0 },
+            { wetRef: 60, dryBase: 20 }
+        ],
+        defaults: [60, 60, 60]
+    }
+};
+
+function pctBar(wetG, dryG) {
+    const wk = wetG * KCAL_WET;
+    const dk = dryG * KCAL_DRY;
+    const total = wk + dk;
+    if (total === 0) return '<div class="pct-wrap"><span class="pct-label">—</span></div>';
+    const pw = Math.round(wk / total * 100);
+    const pd = 100 - pw;
+    return `<div class="pct-wrap">
+        <div class="pct-bar"><div class="pct-wet" style="width:${pw}%"></div><div class="pct-dry" style="width:${pd}%"></div></div>
+        <div class="pct-label">${pw}% H · ${pd}% S</div>
+    </div>`;
+}
+
+function calc(p) {
+    const cat = CATS[p];
+    let totalWet = 0, totalDry = 0, totalKcal = 0;
+
+    for (let i = 1; i <= 3; i++) {
+        const meal = cat.meals[i - 1];
+        const wetGiven = Math.max(0, parseFloat(document.getElementById(`${p}-w${i}`).value) || 0);
+        const kcalDiff = (meal.wetRef - wetGiven) * KCAL_WET;
+        let dryNeeded = Math.max(0, meal.dryBase + kcalDiff / KCAL_DRY);
+        dryNeeded = Math.round(dryNeeded * 10) / 10;
+
+        const mealKcal = wetGiven * KCAL_WET + dryNeeded * KCAL_DRY;
+
+        document.getElementById(`${p}-d${i}`).textContent = dryNeeded + 'g';
+        document.getElementById(`${p}-p${i}`).innerHTML = pctBar(wetGiven, dryNeeded);
+
+        totalWet += wetGiven;
+        totalDry += dryNeeded;
+        totalKcal += mealKcal;
+    }
+
+    totalKcal = Math.round(totalKcal);
+    totalDry = Math.round(totalDry * 10) / 10;
+
+    document.getElementById(`${p}-kcal`).textContent = totalKcal;
+    document.getElementById(`${p}-tw`).textContent = totalWet + 'g';
+    document.getElementById(`${p}-td`).textContent = totalDry + 'g';
+
+    const target = parseFloat(document.getElementById(`${p}-target`).value) || cat.target;
+    const diff = Math.abs(totalKcal - target) / target * 100;
+    const stEl = document.getElementById(`${p}-st`);
+    const noteEl = document.getElementById(`${p}-note`);
+
+    if (diff <= 5) {
+        stEl.textContent = '✓ OK';
+        stEl.className = 'summary-value status-ok';
+        noteEl.style.display = 'none';
+    } else if (diff <= 15) {
+        stEl.textContent = '~ Cerca';
+        stEl.className = 'summary-value status-warn';
+        const over = totalKcal > target;
+        noteEl.style.display = 'block';
+        noteEl.textContent = over
+            ? `${Math.round(totalKcal - target)} kcal por encima de la meta. Considera reducir un poco el seco en la noche.`
+            : `${Math.round(target - totalKcal)} kcal por debajo de la meta. Puedes añadir un poco más de húmedo en cualquier toma.`;
+    } else {
+        stEl.textContent = '! Fuera';
+        stEl.className = 'summary-value status-bad';
+        const over = totalKcal > target;
+        noteEl.style.display = 'block';
+        noteEl.textContent = over
+            ? `⚠️ ${Math.round(totalKcal - target)} kcal por encima de la meta diaria. Revisa las porciones — el exceso sostenido puede causar sobrepeso.`
+            : `⚠️ ${Math.round(target - totalKcal)} kcal por debajo de la meta diaria. Riesgo de déficit nutricional — aumenta el húmedo en la siguiente toma.`;
+    }
+}
+
+const DEFAULT_TARGETS = { s: 210, n: 265 };
+
+function reset() {
+    ['s', 'n'].forEach(p => {
+        CATS[p].defaults.forEach((v, i) => {
+            document.getElementById(`${p}-w${i + 1}`).value = v;
+        });
+        document.getElementById(`${p}-target`).value = DEFAULT_TARGETS[p];
+        calc(p);
+    });
+}
+
+// Init — múltiples eventos para máxima compatibilidad con WhatsApp y WebViews
+calc('s');
+calc('n');
+document.addEventListener('DOMContentLoaded', () => { calc('s'); calc('n'); });
+window.onload = () => { calc('s'); calc('n'); };
+</script>
+</body>
+</html>
