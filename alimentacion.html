@@ -359,7 +359,7 @@
             <div class="cat-name">Sushi 🐈‍⬛</div>
             <div class="cat-breed">Azul Ruso · 3.6 kg</div>
         </div>
-        <div class="cat-badge">Meta <input type="number" class="kcal-input" id="s-target" value="195" min="50" max="600" oninput="calc('s')"> kcal</div>
+        <div class="cat-badge">Meta <input type="number" class="kcal-input" id="s-target" value="210" min="50" max="600" oninput="calc('s')"> kcal</div>
     </div>
 
     <table>
@@ -376,7 +376,7 @@
                 <td>
                     <div class="meal-label">☀️ Mañana</div>
                 </td>
-                <td><input type="number" id="s-w1" value="50" min="0" max="250" oninput="fromWet('s',1)"></td>
+                <td><input type="number" id="s-w1" value="55" min="0" max="250" oninput="fromWet('s',1)"></td>
                 <td><input type="number" class="dry-input" id="s-d1" value="0" min="0" max="250" oninput="fromDry('s',1)"></td>
                 <td id="s-p1"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:100%"></div><div class="pct-dry" style="width:0%"></div></div><div class="pct-label">100% H · 0% S</div></div></td>
             </tr>
@@ -384,7 +384,7 @@
                 <td>
                     <div class="meal-label">🌤 Mediodía</div>
                 </td>
-                <td><input type="number" id="s-w2" value="50" min="0" max="250" oninput="fromWet('s',2)"></td>
+                <td><input type="number" id="s-w2" value="55" min="0" max="250" oninput="fromWet('s',2)"></td>
                 <td><input type="number" class="dry-input" id="s-d2" value="0" min="0" max="250" oninput="fromDry('s',2)"></td>
                 <td id="s-p2"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:100%"></div><div class="pct-dry" style="width:0%"></div></div><div class="pct-label">100% H · 0% S</div></div></td>
             </tr>
@@ -392,7 +392,7 @@
                 <td>
                     <div class="meal-label">🌙 Noche</div>
                 </td>
-                <td><input type="number" id="s-w3" value="45" min="0" max="250" oninput="fromWet('s',3)"></td>
+                <td><input type="number" id="s-w3" value="50" min="0" max="250" oninput="fromWet('s',3)"></td>
                 <td><input type="number" class="dry-input" id="s-d3" value="10" min="0" max="250" oninput="fromDry('s',3)"></td>
                 <td id="s-p3"><div class="pct-wrap"><div class="pct-bar"><div class="pct-wet" style="width:61%"></div><div class="pct-dry" style="width:39%"></div></div><div class="pct-label">61% H · 39% S</div></div></td>
             </tr>
@@ -619,7 +619,7 @@ const KCAL_WET = 1.1;
 const KCAL_DRY = 3.6;
 
 const CATS = {
-    s: { target: 195, defaults: [50, 50, 45] },
+    s: { target: 210, defaults: [55, 55, 50] },
     n: { target: 240, defaults: [60, 60, 60] }
 };
 
